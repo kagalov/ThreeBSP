@@ -1,3 +1,5 @@
+# three.js version: r124
+
 EPSILON = 1e-5
 COPLANAR = 0
 FRONT = 1
@@ -112,7 +114,7 @@ class window.ThreeBSP
     geometry = @toGeometry()
     returning (mesh = new THREE.Mesh geometry, material), =>
       mesh.position.getPositionFromMatrix @matrix
-      mesh.rotation.setEulerFromRotationMatrix @matrix
+      mesh.rotation.setFromRotationMatrix @matrix
 
   toGeometry: () => @options.timer.doTask =>
     matrix = new THREE.Matrix4().getInverse @matrix
