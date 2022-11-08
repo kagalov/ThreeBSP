@@ -56,10 +56,11 @@ function createModel() {
     scene.add(axesHelper);
 
     //创建立方体
-    let cubeGeometry = new THREE.BoxGeometry(60, 60, 60);
-    let cube = createMesh(cubeGeometry);
+    // let cubeGeometry = new THREE.BoxGeometry(60, 60, 60);
+    // let cube = createMesh(cubeGeometry);
+    let cube = createHollowCube(60, 60, 60, 10);
 
-    let cylinderGeometry = new THREE.CylinderGeometry(5, 5, 10, 32);
+    let cylinderGeometry = new THREE.CylinderGeometry(5, 5, 30, 32);
     let cylinder = createMesh(cylinderGeometry);
     // 十进制
     cylinder.position.x = -30;
@@ -80,7 +81,38 @@ function createModel() {
     scene.add(cylinder);
     scene.add(resultMesh);
 }
+/**
+ * 创建一个空心长方体
+ * @param {*} width  X轴上面的宽度
+ * @param {*} height Y轴上面的高度
+ * @param {*} depth Z轴上面的深度
+ * @param {*} thickness 厚度
+ */
+function createHollowCube(width, height, depth, thickness) {
+    let originGeometry = new THREE.BoxGeometry(width, height, depth);
+    let originMesh = createMesh(originGeometry);
 
+    let subGeometry = new THREE.BoxGeometry(width - thickness, height - thickness, depth - thickness);
+    let subMesh = createMesh(subGeometry);
+
+    let resultMesh = subtract(originMesh, subMesh);
+    // 基础网格材质
+    let basicMat = new THREE.MeshBasicMaterial({
+        // 透明度
+        transparent: true,
+        opacity: 0.6,
+        wireframe: true,
+        wireframeLinewidth: 0.5
+    });
+    resultMesh.material = basicMat;
+    return resultMesh;
+}
+/**
+ * 差集合
+ * @param {} originMesh 
+ * @param {*} subMesh 
+ * @returns 
+ */
 function subtract(originMesh, subMesh) {
     let originBsp = new ThreeBSP(originMesh);
     let subBsp = new ThreeBSP(subMesh);
