@@ -133,7 +133,7 @@ class window.ThreeBSP
 
   # CSG Operations
   subtract: (other) => @options.timer.doTask => other.withTimer @options.timer, =>
-    [us, them] = [@tree.clone(), other.tree.clone()]
+    [us, them] = [@tree, other.tree.clone()]
     us
       .invert()
       .clipTo(them)
@@ -145,7 +145,7 @@ class window.ThreeBSP
     new ThreeBSP us.build(them.allPolygons()).invert(), @matrix, @options
 
   union: (other) => @options.timer.doTask => other.withTimer @options.timer, =>
-    [us, them] = [@tree.clone(), other.tree.clone()]
+    [us, them] = [@tree, other.tree.clone()]
     us.clipTo them
     them
       .clipTo(us)
@@ -155,7 +155,7 @@ class window.ThreeBSP
     new ThreeBSP us.build(them.allPolygons()), @matrix, @options
 
   intersect: (other) => @options.timer.doTask => other.withTimer @options.timer, =>
-    [us, them] = [@tree.clone(), other.tree.clone()]
+    [us, them] = [@tree, other.tree.clone()]
     them
       .clipTo(us.invert())
       .invert()

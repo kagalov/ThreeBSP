@@ -250,7 +250,7 @@
         return function() {
           return other.withTimer(_this.options.timer, function() {
             var ref, them, us;
-            ref = [_this.tree.clone(), other.tree.clone()], us = ref[0], them = ref[1];
+            ref = [_this.tree, other.tree.clone()], us = ref[0], them = ref[1];
             us.invert().clipTo(them);
             them.clipTo(us).invert().clipTo(us).invert();
             return new ThreeBSP(us.build(them.allPolygons()).invert(), _this.matrix, _this.options);
@@ -264,7 +264,7 @@
         return function() {
           return other.withTimer(_this.options.timer, function() {
             var ref, them, us;
-            ref = [_this.tree.clone(), other.tree.clone()], us = ref[0], them = ref[1];
+            ref = [_this.tree, other.tree.clone()], us = ref[0], them = ref[1];
             us.clipTo(them);
             them.clipTo(us).invert().clipTo(us).invert();
             return new ThreeBSP(us.build(them.allPolygons()), _this.matrix, _this.options);
@@ -278,7 +278,7 @@
         return function() {
           return other.withTimer(_this.options.timer, function() {
             var ref, them, us;
-            ref = [_this.tree.clone(), other.tree.clone()], us = ref[0], them = ref[1];
+            ref = [_this.tree, other.tree.clone()], us = ref[0], them = ref[1];
             them.clipTo(us.invert()).invert().clipTo(us.clipTo(them));
             return new ThreeBSP(us.build(them.allPolygons()).invert(), _this.matrix, _this.options);
           });
